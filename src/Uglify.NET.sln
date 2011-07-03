@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uglify.Core", "app\Uglify\U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uglify.Tests", "tests\Tests\Uglify.Tests.csproj", "{0DA802C4-CBE9-453A-8E2F-66B33C27CE5F}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "IronJS", "..\lib\IronJS\Src\IronJS\IronJS.fsproj", "{9E257324-94E7-49AF-AE83-718288E925D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{06776473-E222-40D4-BE5F-E4E29F921809}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,16 @@ Global
 		{0DA802C4-CBE9-453A-8E2F-66B33C27CE5F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0DA802C4-CBE9-453A-8E2F-66B33C27CE5F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0DA802C4-CBE9-453A-8E2F-66B33C27CE5F}.Release|x86.ActiveCfg = Release|Any CPU
+		{9E257324-94E7-49AF-AE83-718288E925D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E257324-94E7-49AF-AE83-718288E925D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E257324-94E7-49AF-AE83-718288E925D8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9E257324-94E7-49AF-AE83-718288E925D8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9E257324-94E7-49AF-AE83-718288E925D8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9E257324-94E7-49AF-AE83-718288E925D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E257324-94E7-49AF-AE83-718288E925D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E257324-94E7-49AF-AE83-718288E925D8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9E257324-94E7-49AF-AE83-718288E925D8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9E257324-94E7-49AF-AE83-718288E925D8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,5 +73,6 @@ Global
 		{3E45C27A-69C0-407F-B12D-E521C5207731} = {2D423284-69CD-4F45-A10E-F39D0B8CC8F1}
 		{0DA802C4-CBE9-453A-8E2F-66B33C27CE5F} = {2D423284-69CD-4F45-A10E-F39D0B8CC8F1}
 		{0328E02D-353C-45B8-8F89-9FBAE46E937A} = {634FE084-7017-430C-A1D5-965A631FF753}
+		{9E257324-94E7-49AF-AE83-718288E925D8} = {06776473-E222-40D4-BE5F-E4E29F921809}
 	EndGlobalSection
 EndGlobal

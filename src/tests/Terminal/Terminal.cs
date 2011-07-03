@@ -13,7 +13,8 @@ namespace Uglify.Terminal
             Uglifier uglifier = new Uglifier();
             Console.WriteLine("Uglify executed!");
 
-            uglifier.Uglify("var asdfg = 1234;");
+            var uglyCode = uglifier.Uglify("var a = 1 + 1;");
+             Console.WriteLine("Code: " + uglyCode);
          }
          catch (TargetInvocationException exception)
          {

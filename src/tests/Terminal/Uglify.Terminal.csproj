@@ -35,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IronJS, Version=0.2.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\..\..\lib\IronJS\x64\IronJS.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\lib\IronJS\Src\IronJS\IronJS.fsproj">
+      <Project>{9E257324-94E7-49AF-AE83-718288E925D8}</Project>
+      <Name>IronJS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\app\Uglify\Uglify.Core.csproj">
       <Project>{0328E02D-353C-45B8-8F89-9FBAE46E937A}</Project>
       <Name>Uglify.Core</Name>

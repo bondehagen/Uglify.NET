@@ -96,17 +96,15 @@ namespace Uglify
       /// </returns>
       private static CSharp.Context SetupContext(ResourceHelper resourceHelper)
       {
-         var context = new CSharp.Context();
+         CSharp.Context context = new CSharp.Context();
          context.CreatePrintFunction();
-         var requirer = new Requirer(context, resourceHelper);
+         Requirer requirer = new Requirer(context, resourceHelper);
+         context.SetGlobal("require", requirer.Require);
 
          // Debug.registerConsolePrinter();
          // IronJS.Support.Debug.registerAstPrinter(AstPrinter);
          // IronJS.Support.Debug.registerExprPrinter(ExprPrinter);
-
-         context.SetGlobal("require", requirer.Require);
-         context.SetGlobal("require", requirer.Require);
-
+         
          return context;
       }
    }
