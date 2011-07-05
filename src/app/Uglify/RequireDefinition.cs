@@ -38,6 +38,8 @@ namespace Uglify
          this.requireCache = new Dictionary<string, CommonObject>();
          this.cacheLock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
          this.require = Utils.CreateFunction<Func<string, CommonObject>>(this.context.Environment, 1, Require);
+         CommonObject module = this.context.Environment.NewObject();
+         this.context.SetGlobal("module", module);
       }
 
 

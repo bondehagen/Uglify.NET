@@ -56,10 +56,8 @@ namespace Uglify
 
       private static FunctionObject LoadUglify(CSharp.Context context, ResourceHelper resourceHelper)
       {
-         const string defineModule = "var module = {};";
-
          string uglifyCode = resourceHelper.Get("uglify-js.js");
-         context.Execute(String.Concat(defineModule, uglifyCode));
+         context.Execute(String.Concat(uglifyCode));
 
          return context.GetGlobalAs<FunctionObject>("uglify");
       }
