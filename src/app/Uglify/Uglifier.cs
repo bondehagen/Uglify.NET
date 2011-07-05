@@ -2,7 +2,6 @@ using System;
 
 using IronJS;
 using IronJS.Hosting;
-using IronJS.Support;
 
 namespace Uglify
 {
@@ -13,7 +12,7 @@ namespace Uglify
    {
       private readonly CSharp.Context context;
       private readonly ResourceHelper resourceHelper;
-      private FunctionObject uglify;
+      private readonly FunctionObject uglify;
 
 
       /// <summary>
@@ -23,7 +22,7 @@ namespace Uglify
       {
          this.resourceHelper = new ResourceHelper();
          this.context = SetupContext(this.resourceHelper);
-         LoadUglify();
+         this.uglify = LoadUglify(this.context, this.resourceHelper);
       }
 
 
@@ -31,23 +30,14 @@ namespace Uglify
       /// Uglifies the specified code.
       /// </summary>
       /// <param name="code">The JavaScript code that is to be uglified.</param>
+      /// <param name="options">The options.</param>
       /// <returns>
       /// The uglified code.
       /// </returns>
-      public string Uglify(string code)
-      {
-         return Uglify(code, "");
-      }
-
-
-      /// <summary>
-      /// Uglifies the specified code.
-      /// </summary>
-      /// <param name="code">The JavaScript code that is to be uglified.</param>
-      /// <returns>
-      /// The uglified code.
-      /// </returns>
-      public string Uglify(string code, string options)
+      public string Uglify(
+         string code,
+         // TODO: The options can probably be made into a neat little object, figure out how. [asbjornu]
+         string options = "")
       {
          if (code == null)
             throw new ArgumentNullException("code");
@@ -57,28 +47,40 @@ namespace Uglify
             BoxedValue boxedResult = this.uglify.Call(this.context.Globals, code, options);
             return TypeConverter.ToString(boxedResult);
          }
-         catch (Error.Error error)
+         catch (UserError error)
          {
-            Console.WriteLine(error.Message);
+            throw new UglifyException(code, error);
          }
-         return null;
       }
 
 
-      private void LoadUglify()
+      private static FunctionObject LoadUglify(CSharp.Context context, ResourceHelper resourceHelper)
       {
-         string uglifyCode = this.resourceHelper.Get("uglify-js.js");
-
          const string defineModule = "var module = {};";
-         this.context.Execute(defineModule + uglifyCode);
-         this.uglify = this.context.GetGlobalAs<FunctionObject>("uglify");
+
+         string uglifyCode = resourceHelper.Get("uglify-js.js");
+         context.Execute(String.Concat(defineModule, uglifyCode));
+
+         return context.GetGlobalAs<FunctionObject>("uglify");
       }
 
 
-      private void ExprPrinter(string value)
+      private static CSharp.Context SetupContext(ResourceHelper resourceHelper)
       {
-         Console.Write(value);
+         var context = new CSharp.Context();
+
+         context.CreatePrintFunction();
+         // Debug.registerConsolePrinter();
+         // IronJS.Support.Debug.registerAstPrinter(AstPrinter);
+         // IronJS.Support.Debug.registerExprPrinter(ExprPrinter);
+         
+         var require = new RequireDefinition(context, resourceHelper);
+         require.Define();
+
+         return context;
       }
+
+
 
 
       private void AstPrinter(string value)
@@ -87,25 +89,9 @@ namespace Uglify
       }
 
 
-      /// <summary>
-      /// Sets up the context.
-      /// </summary>
-      /// <param name="resourceHelper">The resource helper.</param>
-      /// <returns>
-      /// The context.
-      /// </returns>
-      private static CSharp.Context SetupContext(ResourceHelper resourceHelper)
+      private void ExprPrinter(string value)
       {
-         CSharp.Context context = new CSharp.Context();
-         context.CreatePrintFunction();
-         Requirer requirer = new Requirer(context, resourceHelper);
-         context.SetGlobal("require", requirer.Require);
-
-         // Debug.registerConsolePrinter();
-         // IronJS.Support.Debug.registerAstPrinter(AstPrinter);
-         // IronJS.Support.Debug.registerExprPrinter(ExprPrinter);
-         
-         return context;
+         Console.Write(value);
       }
    }
 }

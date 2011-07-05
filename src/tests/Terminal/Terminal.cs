@@ -9,7 +9,8 @@ namespace Uglify.Terminal
       {
          try
          {
-            Console.WriteLine("Loading..");
+            Console.WriteLine("Loading...");
+            
             Uglifier uglifier = new Uglifier();
             Console.WriteLine("Uglify executed!");
 

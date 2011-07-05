@@ -5,24 +5,20 @@ namespace Uglify.Tests
    [TestFixture]
    public class UglifierTests
    {
-      #region Setup/Teardown
-
-      [SetUp]
-      public void SetUp()
+      [Test]
+      public void Uglify_Loads()
       {
-         this.uglifier = new Uglifier();
+         new Uglifier();
       }
 
-      #endregion
 
-      private Uglifier uglifier;
-
-
-      [Test(Description = "This doesn't work quite yet.")]
+      [Test]
       public void Uglify_ReturnsUglifiedCode()
       {
+         var uglifier = new Uglifier();
+
          // TODO: Find verbose and complicated code to uglify.
-         this.uglifier.Uglify("var x = { };");
+         uglifier.Uglify("(function(){ var x = 'hello world'; }();");
       }
    }
 }
