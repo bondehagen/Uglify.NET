@@ -2,6 +2,7 @@ using System;
 
 using IronJS;
 using IronJS.Hosting;
+using Uglify.CommonUtils;
 
 namespace Uglify
 {
@@ -67,12 +68,14 @@ namespace Uglify
       {
          var context = new CSharp.Context();
 
-         context.CreatePrintFunction();
+         //context.CreatePrintFunction();
          // Debug.registerConsolePrinter();
          // IronJS.Support.Debug.registerAstPrinter(AstPrinter);
          // IronJS.Support.Debug.registerExprPrinter(ExprPrinter);
          
-         var require = new RequireDefinition(context, resourceHelper);
+         ConsoleConstructor.AttachToContext(context);
+          context.Execute("var print = Console.log");
+          var require = new RequireDefinition(context, resourceHelper);
          require.Define();
 
          return context;

@@ -45,6 +45,7 @@
     <Compile Include="ResourceHelper.cs" />
     <Compile Include="Uglifier.cs" />
     <Compile Include="UglifyException.cs" />
+    <Compile Include="CommonUtils\ConsoleObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\..\..\lib\UglifyJS\lib\parse-js.js">
