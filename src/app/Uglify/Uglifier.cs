@@ -1,7 +1,11 @@
 using System;
-
+using System.Collections.Generic;
 using IronJS;
+using IronJS.Compiler;
 using IronJS.Hosting;
+using IronJS.Support;
+using Microsoft.FSharp.Collections;
+using Microsoft.FSharp.Core;
 using Uglify.CommonUtils;
 
 namespace Uglify
@@ -22,8 +26,12 @@ namespace Uglify
       public Uglifier()
       {
          this.resourceHelper = new ResourceHelper();
-         this.context = SetupContext(this.resourceHelper);
-         this.uglify = LoadUglify(this.context, this.resourceHelper);
+          AstTranslator astTranslator = new AstTranslator();
+         this.context = SetupContext(resourceHelper);
+          Helper.registerAstPrinter(x => Console.WriteLine(astTranslator.ToParseJs((Ast.Tree.Function) x)));
+
+          dynamic sf = this.context.Execute("var a = 10+15; var b=  a+9;");
+          //this.uglify = LoadUglify(this.context, this.resourceHelper);
       }
 
 
@@ -84,13 +92,13 @@ namespace Uglify
 
 
 
-      private void AstPrinter(string value)
+      private static void AstPrinter(string value)
       {
          Console.Write(value);
       }
 
 
-      private void ExprPrinter(string value)
+      private static void ExprPrinter(string value)
       {
          Console.Write(value);
       }
