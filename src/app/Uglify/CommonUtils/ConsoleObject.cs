@@ -35,7 +35,10 @@ namespace Uglify.CommonUtils
 
         internal static void Dir(FunctionObject func, CommonObject that, object value)
         {
-            Log(func,that,value.GetType().ToString());
+           Console.BackgroundColor = ConsoleColor.Black;
+           Console.ForegroundColor = ConsoleColor.Yellow;
+           ObjectDumper.Write(value, 15);
+           Console.ResetColor();
         }
     }
 

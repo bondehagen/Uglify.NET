@@ -10,12 +10,12 @@ namespace Uglify.Terminal
          try
          {
             Console.WriteLine("Loading...");
-            
+
             Uglifier uglifier = new Uglifier();
             Console.WriteLine("Uglify executed!");
 
-         //   var uglyCode = uglifier.Uglify("var a = 1 + 1;");
-           //  Console.WriteLine("Code: " + uglyCode);
+            var uglyCode = uglifier.Uglify("var a = 1 + 1;");
+            Console.WriteLine("Code: " + uglyCode);
          }
          catch (TargetInvocationException exception)
          {

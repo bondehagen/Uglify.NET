@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+
 using IronJS;
 using IronJS.Compiler;
 using IronJS.Hosting;
 using IronJS.Support;
-using Microsoft.FSharp.Collections;
-using Microsoft.FSharp.Core;
 using Uglify.CommonUtils;
 
 namespace Uglify
@@ -26,12 +26,8 @@ namespace Uglify
       public Uglifier()
       {
          this.resourceHelper = new ResourceHelper();
-          AstTranslator astTranslator = new AstTranslator();
-         this.context = SetupContext(resourceHelper);
-          Helper.registerAstPrinter(x => Console.WriteLine(astTranslator.ToParseJs((Ast.Tree.Function) x)));
-
-          dynamic sf = this.context.Execute("var a = 10+15; var b=  a+9;");
-          //this.uglify = LoadUglify(this.context, this.resourceHelper);
+         this.context = SetupContext(this.resourceHelper);
+         this.uglify = LoadUglify(this.context, this.resourceHelper);
       }
 
 
@@ -53,8 +49,19 @@ namespace Uglify
 
          try
          {
-            BoxedValue boxedResult = this.uglify.Call(this.context.Globals, code, options);
-            return TypeConverter.ToString(boxedResult);
+            AstTranslator astTranslator = new AstTranslator();
+            StringWriter writer = new StringWriter();
+            Action<object> action = x => writer.WriteLine(astTranslator.ToParseJs((Ast.Tree.Function)x));
+            Helper.registerAstPrinter(action);
+            this.context.Execute(code);
+            Helper.removeAstPrinter(action);
+            string ast = writer.ToString();
+            CommonObject test = this.context.Execute(ast);
+            BoxedValue result = this.context.GetGlobalAs<FunctionObject>("uglify2")
+               .Call(this.context.Globals, test, "");
+
+            // BoxedValue result = this.uglify.Call(this.context.Globals, code, options);
+            return TypeConverter.ToString(result);
          }
          catch (UserError error)
          {
@@ -82,7 +89,6 @@ namespace Uglify
          // IronJS.Support.Debug.registerExprPrinter(ExprPrinter);
          
          ConsoleConstructor.AttachToContext(context);
-          context.Execute("var print = Console.log");
           var require = new RequireDefinition(context, resourceHelper);
          require.Define();
 

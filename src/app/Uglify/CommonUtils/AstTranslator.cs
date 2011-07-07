@@ -16,14 +16,14 @@ namespace Uglify.CommonUtils
 
             Ast.Tree tree = astFunction.Item3;
 
-            return string.Format("var ast = ['toplevel',{0}];", Walk(tree, ""));
+            return string.Format("['toplevel',{0}]", Walk(tree, ""));
         }
 
         private string Walk(Ast.Tree tree, string ret)
         {
             Type type = tree.GetType().UnderlyingSystemType;
             PropertyInfo item = type.GetProperty("Item");
-                                                                                                                                                                            
+                                                                                                                                                  
             if (tree.IsVar)
             {
                 Ast.Tree next = ((Ast.Tree.Var) tree).Item;
